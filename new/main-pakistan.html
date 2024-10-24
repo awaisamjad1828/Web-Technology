@@ -1,0 +1,26 @@
+import React, { useEffect, useState } from 'react'; import axios from 'axios'; const Courses = () => { const [courses, setCourses] = useState([]); useEffect(() => { const fetchCourses = async () => { const response = await axios.get('http://127.0.0.1:8000/api/courses/');
+setCourses(response.data); }; fetchCourses(); }, []); return (
+<div>
+    {/* Category buttons for filtering courses */}
+    <div className="categories text-center btn-cat">
+        <button onClick={()=> filterCourses('all')}>All</button>
+        <button onClick={()=> filterCourses('Web Development')}>Web Development</button>
+        <button onClick={()=> filterCourses('Programming Language')}>Programming Language</button>
+        <button onClick={()=> filterCourses('Other')}>Other</button>
+    </div>
+
+    {/* Container for displaying courses */}
+    <div className="container" id="courseContainer" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        return (
+        <>
+            {courses.map(course => (
+            <div key={course.id}>
+                <h2>{course.title}</h2>
+                <p>{course.description}</p>
+            </div>
+            ))}
+            </> ); .btn-cat button { margin: 10px; border: none; padding: 10px 20px; } .btn-cat button:hover { background-color: #007bff; color: white; font-weight: bold; } .card { margin-bottom: 20px; } /* Ensuring responsiveness */ @media (max-width: 768px)
+            { .card { width: calc(50% - 20px); } } @media (max-width: 480px) { .card { width: calc(100% - 20px); } } ` }
+            </style>
+    </div>
+    ); }; export default Courses;

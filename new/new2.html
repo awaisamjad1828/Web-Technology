@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        iframe {
+            width: 560px;
+            height: 315px;
+            margin: 20px 0;
+        }
+        
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Watch the Course</h1>
+    <iframe id="videoPlayer" src="https://www.youtube.com/watch?v=UrsmFxEIp5k&pp=ygUScHl0aG9uIGZ1bGwgY291cnNl
+    " frameborder="0" allowfullscreen></iframe>
+    <button id="likeButton">Like</button>
+    <div id="message"></div>
+
+    <script>
+        const videoId = "_uQrJ0TkZlc";
+        const videoPlayer = document.getElementById("videoPlayer");
+        const likeButton = document.getElementById("likeButton");
+        const messageDiv = document.getElementById("message");
+
+        // Simulated user IP (for demonstration purposes, we use local storage instead)
+        const userIP = localStorage.getItem("userIP") || generateUserIP();
+        localStorage.setItem("userIP", userIP);
+
+        // Check if the user has liked the video before
+        const likes = JSON.parse(localStorage.getItem("likes")) || {};
+        if (likes[userIP]) {
+            messageDiv.innerText = `Welcome back to this course! You liked this video ${likes[userIP]} times.`;
+        }
+
+        // Track time spent on the video page
+        let startTime = Date.now();
+
+        window.addEventListener("beforeunload", () => {
+            const timeSpent = (Date.now() - startTime) / 1000; // Time in seconds
+            console.log(`Time spent on the video: ${timeSpent} seconds`);
+            // You can send this data to your server if needed
+        });
+
+        likeButton.addEventListener("click", () => {
+            if (!likes[userIP]) {
+                likes[userIP] = 0;
+            }
+            likes[userIP] += 1; // Increment like count
+            localStorage.setItem("likes", JSON.stringify(likes));
+            messageDiv.innerText = "Thanks for liking!";
+        });
+
+        // Function to generate a random user IP (for simulation)
+        function generateUserIP() {
+            const randomIP = `192.168.1.${Math.floor(Math.random() * 255)}`;
+            return randomIP;
+        }
+    </script>
+</body>
+
+</html>
