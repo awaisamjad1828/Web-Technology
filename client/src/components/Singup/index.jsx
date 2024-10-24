@@ -17,7 +17,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "${process.env.REACT_APP_API_URL}/api/signup";
+      const url = "https://seahorse-app-do6gg.ondigitalocean.app/api/signup";
       const { data: res } = await axios.post(url, data);
       navigate("/login");
       console.log(res.message);
